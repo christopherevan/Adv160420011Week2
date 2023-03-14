@@ -28,9 +28,9 @@ class GameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (arguments != null) {
-            val playerName = GameFragmentArgs.fromBundle(requireArguments()).playerName
+            val score = GameFragmentArgs.fromBundle(requireArguments()).playerName
             val txtTurn = view.findViewById<TextView>(R.id.txtTurn)
-            txtTurn.text = "$playerName's Turn"
+            txtTurn.text = "Your score is $score"
         }
 
         val btnBack = view.findViewById<Button>(R.id.btnBack)

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.navigation.Navigation
+import kotlin.random.Random
 
 /**
  * A simple [Fragment] subclass.
@@ -15,6 +16,9 @@ import androidx.navigation.Navigation
  * create an instance of this fragment.
  */
 class MainFragment : Fragment() {
+    private var r1 = 0
+    private var r2 = 0
+    var res = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,12 +30,32 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        var score = 0
+        val txtNums = view.findViewById<TextView>(R.id.txtNums)
+        getRand(txtNums)
+
         val btnStart = view.findViewById<Button>(R.id.btnStart)
         btnStart.setOnClickListener {
             val txtName = view.findViewById<TextView>(R.id.txtName)
-            val playerName = txtName.text.toString()
-            val action = MainFragmentDirections.actionGameFragment(playerName)
-            Navigation.findNavController(it).navigate(action)
+            val ans = txtName.text.toString().toInt()
+
+            if (ans == res) {
+                score++
+                getRand(txtNums)
+                txtName.text = ""
+            } else {
+                val action = MainFragmentDirections.actionGameFragment(score.toString())
+                Navigation.findNavController(it).navigate(action)
+                score = 0
+            }
         }
+    }
+
+    fun getRand(t: TextView) {
+        r1 = Random.nextInt(1, 100)
+        r2 = Random.nextInt(1, 100)
+        res = r1 + r2
+        t.text = "$r1 + $r2 ="
     }
 }
